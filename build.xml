@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<!--
+
+  Ant build file for FSEQ
+
+  run ant -projecthelp to see list of targets.
+
+
+-->
+
+<project default="all" basedir=".">
+
+  <property name="name" value="fseq" />
+  <property name="version" value="1.1" />
+  <property name="build.name" value="${name}-${version}" />
+  <property name="build.compiler" value="modern" />
+  <property name="build.deprecation" value="false" />
+
+  <property name="bin.dir" value="./bin" />
+  <property name="lib.dir" value="./lib" />
+  <property name="build.dir" value="./build~"/>
+  <property name="build.classes" value="${build.dir}/classes"/>
+  <property name="src.dir" value="./src"/>
+  
+  <property name="dist" value="./dist~" />
+
+
+  <!-- classpath set to include jars -->
+  <fileset id="lib.classpath" dir="${lib.dir}" >
+    <include name="commons-cli-1.1.jar" />
+  </fileset>
+
+  <target name="all" depends="jar, dist-all"
+  	description="Cleans, compiles and creates distribution files.">
+  </target>
+
+  <!-- Creates directories for build and dist. -->
+  <target name="prepare">
+    <mkdir dir="${build.dir}" />
+    <mkdir dir="${dist}" />
+  </target>
+
+
+  <target name="clean" 
+   description="Removes generated directories and files.">
+    <delete dir="${build.dir}" />
+    <delete dir="${dist.root}" />
+  </target>
+
+  <!-- Compiles the source directory -->
+  <target name="compile" depends="prepare" description="Compiles java files.">
+ 	<javac
+ 	      destdir="${build.classes}"
+ 	      deprecation="${build.deprecation}"
+ 	      depend="no"
+ 	      debug="true"
+ 	      source="1.5">
+ 		  <src path="${src.dir}"/>
+ 	      <classpath>
+ 	        <fileset refid="lib.classpath"/>
+ 	      </classpath>
+ 	    </javac>
+  </target>
+
+  <target name="jar" depends="compile"
+  	description="Creates jar in 'build' directory.">
+
+    <jar jarfile="${build.dir}/${name}.jar" basedir="${build.classes}"/>
+  </target>
+  
+  <target name="dist-clean"
+   description="Removes directories and files from the distribution directory before a new dist target build.">
+
+    <delete dir="${dist.dir}" />
+
+  </target>
+
+  
+
+  <!-- creates all distribution sets -->
+  <target name="dist-all">
+  	<!--
+    <zip destfile="${dist}/gkde.zip">
+      <zipfileset dir="lib" prefix="assess/lib"/>
+      <zipfileset dir="bin" prefix="assess/bin"/>
+      <zipfileset dir="${build.dir}" includes="*.jar" prefix="assess/lib"/>
+      <zipfileset dir="sample" prefix="assess/sample" includes="**/*"/>
+    	
+    </zip>
+  	-->
+  	<tar destfile="${dist}/${name}.tar" >
+  	  <tarfileset dir="." mode="755" prefix="/${name}">
+  		  <include name="README.txt"/>
+  	  </tarfileset>
+      <tarfileset dir="." mode="755" prefix="/${name}">
+          <include name="mapviewToBed.pl"/>
+      </tarfileset>
+  	  <tarfileset dir="bin/linux" mode="755" prefix="/${name}/bin">
+  	    <include name="*"/>
+  	  </tarfileset>
+      <tarfileset dir="lib" prefix="/${name}/lib">
+  		 <include name="*.jar"/>
+      </tarfileset>
+  	  <tarfileset file="${build.dir}/${name}.jar" prefix="/${name}/lib"/>
+  	</tar>
+  	<gzip zipfile="${dist}/${name}.tgz" src="${dist}/${name}.tar"/>
+  </target>
+
+</project>
+
+
+
