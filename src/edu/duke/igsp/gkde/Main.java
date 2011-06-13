@@ -26,22 +26,6 @@ import edu.duke.igsp.gkde.format.WiggleDensityWriter;
 import edu.duke.igsp.gkde.background.*;
 
 public class Main {
-//Notes
-// DONE Clean this to remove old background stuff and make sure it still works
-// Add option to have probability based bed output instead of just a threshold
-// Keep threshold option
-// DONE reinstate stepping option for smaller files 
-// DONE Need to read background files in binary format
-// DONE Need to read input files in binary format
-// ** Also option to read input in non-binary?
-// DONE Function to generate density distances between + - cuts to get average fragment size
-// DONE Function to shift by this amount
-// DONE Option to turn this off in DNase experiments
-// DONE Only use + sequences to the left and - sequences to the right
-// DONE change density by density = 1 / background / ploidy ratio
-// ** Probability estimate based on poisson? gamma? binomial?
-// DONE Also, standalone to create binary from the background and input
-// Graphics...
   
   public static void main(String[] argv) throws Exception {
    
@@ -343,26 +327,40 @@ public class Main {
 //	  }
 	  //Doing Wilcoxon-Mann-Whitney Rank Sum Test
 	  //Can compute confidence interval if necessary
-	  KDEChromosome.Sequence[] seqs = chrs[0].getCuts();
+	  
+	  //get biggest chr for estimate
+	  int max_chr = 0;
+	  long max_chr_length = chrs[0].getLength();
+	  for(int i = 0; i < chrs.length; ++i){
+	  	if(chrs[i].getLength() > max_chr_length) {
+	  		max_chr = i;
+	  		max_chr_length = chrs[i].getLength();
+	  	}
+	  }
+
+	  KDEChromosome.Sequence[] seqs = chrs[max_chr].getCuts();
 	  long cur_pos;
 	  long last_pos;
 	  ArrayList<Integer> d_temp = new ArrayList<Integer>();
 	  int k;
 	  
-	  for(k = 0; k < 100; ++k) {
+	  for(k = 0; k < max_chr_length; ++k) {
 		  if(seqs[k].getStrand()) {
 			  break;
 		  }
 	  }
 	  
-	  int max_range = 500;
-	  int max = 1000000;
+	  int max_range = 500; //max search range for sequences
+	  int max = 1000000; //1 million is a good estimate
 	  int prior = 150;
 	  if(max > seqs.length - max_range-k) {
 		  max = seqs.length-max_range-k;
 	  }
 	  
 	  for(int j = k; j < k+max; ++j) {
+	  	if(j > max_chr_length) {
+	  		break;
+	  	}
 		  if(seqs[j].getStrand()) {
 			  last_pos = seqs[j].getPosition();
 			  int back_check = j - 10000;

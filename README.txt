@@ -16,6 +16,8 @@ Bed (see above)
 -----------------------------------
 Unix (Linux)
 
+Build with ant from the base directory.
+
 Make sure 'bin/fseq' is executable (chmod 0755 bin/fseq)
 
 For a list of options, type 'fseq -h'
