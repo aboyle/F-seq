@@ -38,6 +38,7 @@
   <!-- Creates directories for build and dist. -->
   <target name="prepare">
     <mkdir dir="${build.dir}" />
+    <mkdir dir="${build.classes}" />
     <mkdir dir="${dist}" />
   </target>
 

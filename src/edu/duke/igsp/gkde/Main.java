@@ -91,7 +91,7 @@ public class Main {
   	long ncuts = 0l;
 	float temp_threshold = 0f;
 
-    System.out.println("F-Seq Version 1.84");
+    System.out.println("F-Seq Version 1.85");
     
     try{
       CommandLine cmd = parser.parse(opts, argv);
@@ -334,7 +334,7 @@ public class Main {
 	  for(int i = 0; i < chrs.length; ++i){
 	  	if(chrs[i].getLength() > max_chr_length) {
 	  		max_chr = i;
-	  		max_chr_length = chrs[i].getLength();
+	  		max_chr_length = chrs[i].getLength(); //This is actually the size of the array - poor name
 	  	}
 	  }
 
