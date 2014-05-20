@@ -16,7 +16,33 @@ Bed (see above)
 -----------------------------------
 Unix (Linux)
 
-Build with ant from the base directory.
+Build with ant from the base directory:
+~$ git clone https://github.com/aboyle/F-seq.git
+~$ cd F-seq/
+~/F-seq$ ant
+
+This will build F-seq and package it in the dist~ folder. To then run F-seq:
+~/F-seq$ cd dist~/
+~/F-seq/dist~$ tar -xvf fseq.tgz
+~/F-seq/dist~$ cd fseq/bin/
+~/F-seq/dist~/fseq/bin$ ./fseq
+F-Seq Version 1.85
+usage: fseq [options]... [file(s)]...
+ -b <background dir>     background directory (default=none)
+ -c <arg>                genomic count of sequence reads (defualt =
+                         calculated)
+ -d <input dir>          input directory (default=current directory)
+ -f <arg>                fragment size (default=estimated from data)
+ -h                      print usage
+ -l <arg>                feature length (default=600)
+ -o <output dir>         output directory (default=current directory)
+ -of <wig | bed | npf>   output format (default wig)
+ -p <ploidy dir>         ploidy/input directory (default=none)
+ -s <arg>                wiggle track step (default=1)
+ -t <arg>                threshold (standard deviations) (default=4.0)
+ -v                      verbose output
+ -wg <arg>               wg threshold set (defualt = calculated)
+ 
 
 Make sure 'bin/fseq' is executable (chmod 0755 bin/fseq)
 
@@ -33,6 +59,10 @@ Troubleshooting
 A likely cause for errors is an "OutOfMemory" exception.  
 To increase the available memory to the java virtual machine, edit
 'bin/fseq' file and change the JAVA_OPTS property to increase the heap size.
+
+Users also typically complain about an 'ArrayOutOfBounds' exception. This is due to a low number of reads
+and is fixed in the latest version of F-seq. You can also get around this error by using the -f option
+to set your fragment size.
 
 -----------------------------------
 License
