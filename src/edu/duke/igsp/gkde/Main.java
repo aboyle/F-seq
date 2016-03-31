@@ -63,8 +63,8 @@ public class Main {
     opts.addOption("f",true, "fragment size (default=estimated from data)");
 //    opts.addOption("b", true, "bandwidth (default=200)");
 //    opts.addOption("w", true, "window (default=3800");
-    opts.addOption("wg", true, "wg threshold set (defualt = calculated)");
-    opts.addOption("c", true, "genomic count of sequence reads (defualt = calculated)");
+    opts.addOption("wg", true, "wg threshold set (default = calculated)");
+    opts.addOption("c", true, "genomic count of sequence reads (default = calculated)");
     opts.addOption("h", false, "print usage");
     opts.addOption(OptionBuilder.withArgName( "input dir" )
         .hasArg()
