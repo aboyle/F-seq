@@ -29,7 +29,7 @@ This will build F-seq and package it in the dist~ folder. To then run F-seq:
 F-Seq Version 1.85
 usage: fseq [options]... [file(s)]...
  -b <background dir>     background directory (default=none)
- -c <arg>                genomic count of sequence reads (defualt =
+ -c <arg>                genomic count of sequence reads (default =
                          calculated)
  -d <input dir>          input directory (default=current directory)
  -f <arg>                fragment size (default=estimated from data)
@@ -41,7 +41,7 @@ usage: fseq [options]... [file(s)]...
  -s <arg>                wiggle track step (default=1)
  -t <arg>                threshold (standard deviations) (default=4.0)
  -v                      verbose output
- -wg <arg>               wg threshold set (defualt = calculated)
+ -wg <arg>               wg threshold set (default = calculated)
  
 
 Make sure 'bin/fseq' is executable (chmod 0755 bin/fseq)
