@@ -1,3 +1,5 @@
+F-seq is deprecated. Please see F-seq 2 for a more modern implementation of this tool: https://github.com/Boyle-Lab/F-Seq2
+
 Welcome to F-Seq.
 
 This software requires Java version 1.5 or greater.  
